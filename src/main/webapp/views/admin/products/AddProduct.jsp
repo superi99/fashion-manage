@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<<jsp:useBean id="addProduct"
+<jsp:useBean id="addProduct"
 	class="com.fashionmanage.bean.AddProductBean"></jsp:useBean>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,7 @@
 <title>AdminKit Demo - Web UI Kit &amp; Dashboard Template</title>
 
 <link href="template/admin/css/app.css" rel="stylesheet" />
+<link href="template/admin/css/custom.css" rel="stylesheet" />
 <!-- <link href="template/admin/css/modal-box.css" rel="stylesheet" /> -->
 </head>
 
@@ -34,10 +36,9 @@
 			<main class="content">
 
 				<div class="container-fluid p-0">
-
+					<h1 class="h3 mb-3">Thêm sản phẩm</h1>
 					<div class="card">
 						<div class="card-header">
-							<h5 class="card-title">Thêm sản phẩm</h5>
 							<c:if test="${not empty error }">
 								<div class="alert alert-danger alert-dismissible" role="alert">
 									<button type="button" class="close" data-dismiss="alert"
@@ -64,11 +65,8 @@
 
 						</div>
 						<div class="card-body">
-							<div class="form-group row">
-								<label class="col-form-label col-sm-8 text-danger">${error}</label>
-
-							</div>
-							<form action="admin-sanpham-add" method="POST"
+						
+							<form id="form-product" action="admin-sanpham-add" method="POST"
 								name="validateForm" onsubmit="validateNumber();"
 								enctype="multipart/form-data">
 								<div class="form-group row">
@@ -94,10 +92,10 @@
 										tính</label>
 									<div class="col-sm-10">
 										<label class="custom-control custom-checkbox m-0"> <input
-											type="checkbox" class="custom-control-input" name="gender" />
+											type="checkbox" class="custom-control-input" name="gender" value="1" />
 											<span class="custom-control-label">Nam</span>
 										</label> <label class="custom-control custom-checkbox m-0"> <input
-											type="checkbox" class="custom-control-input" name="gender" />
+											type="checkbox" class="custom-control-input" name="gender"  value="2"/>
 											<span class="custom-control-label">Nữ</span>
 										</label>
 									</div>
@@ -201,78 +199,21 @@
 									</div>
 								</div>
 
-								<div class="form-group row">
+								
+							</form>
+							<div class="form-group row">
 									<div class="col-sm-10 ml-sm-auto">
-										<button type="submit" class="btn btn-success">Lưu</button>
+										<button type="submit" class="btn btn-success" id="btn-submit" >Lưu</button>
 										<button type="submit" class="btn btn-danger">Quay lại</button>
 									</div>
 
 								</div>
-							</form>
 						</div>
 					</div>
 				</div>
 			</main>
 
-			<!-- modal box to them chi tiet -->
-			<!-- <div id="myModal" class="modal">
-				Modal content
-				<div class="modal-content">
-					<div>
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-						<div class="alert-message">
-
-
-							<div class="card-header">
-								<h5 class="card-title">Thêm chi tiết</h5>
-
-							</div>
-							<div class="card-body">
-								<form>
-									<div class="form-group row">
-										<label class="col-form-label col-sm-3 text-sm-right">Kích
-											cỡ</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control"
-												placeholder="nhập vào kích cỡ" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-sm-3 text-sm-right">Màu</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control"
-												placeholder="nhập vào màu sắc" />
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-form-label col-sm-3 text-sm-right">Số
-											lượng</label>
-										<div class="col-sm-9">
-											<input type="text" class="form-control"
-												placeholder="nhập vào số lượng" />
-										</div>
-									</div>
-
-									<div class="form-group row">
-										<div class="col-sm-9 ml-sm-auto">
-											<button type="submit" class="btn btn-success">Thêm</button>
-											<button type="submit" class="btn btn-danger">Quay
-												lại</button>
-										</div>
-
-									</div>
-								</form>
-							</div>
-
-
-						</div>
-					</div>
-				</div>
-			</div> -->
-			<!-- /modal box to them chi tiet -->
+			
 			<%@include file="/common/admin/footer.jsp"%>
 		</div>
 	</div>
@@ -281,6 +222,7 @@
 	<script src="template/admin/js/app.js"></script>
 	<!-- <script src="template/admin/js/modal-box.js"></script> -->
 	<script src="template/admin/js/clone-child.js"></script>
+		<script src="template/admin/js/ajax.js"></script>
 
 	<script>
 		$(function() {

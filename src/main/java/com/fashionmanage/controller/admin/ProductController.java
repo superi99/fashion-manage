@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fashionmanage.dao.ProductDao;
 
-/**
- * Servlet implementation class ProductController
- */
+
 @WebServlet("/admin-sanpham")
 public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +26,12 @@ public class ProductController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String action = request.getParameter("action");
+		if(action != null && action.equals("delete")) {
+			String id = request.getParameter("productId");
+			
+		}
 		request.setAttribute("products", new ProductDao().getProducts());
 		request.getRequestDispatcher("views/admin/products/ProductManage.jsp").forward(request, response);
 	}

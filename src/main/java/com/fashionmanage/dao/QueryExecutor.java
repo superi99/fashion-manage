@@ -77,8 +77,12 @@ public class QueryExecutor {
 				return res;
 			}
 		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
-			// LOGGER.error("Execute statement error " + e.getMessage());
 		}
 		return 0;
 	}

@@ -13,7 +13,8 @@ public class Product {
 	private Category category;
 	private Date lastUpdate;
 	private int sale;
-	private List<String> imgs = new ArrayList<>();;
+	private String featureImage;
+	private List<String> imgs = new ArrayList<>();
 	private List<ProductDetail> productDetails = new ArrayList<>();
 
 	public Product() {
@@ -21,7 +22,7 @@ public class Product {
 	}
 
 	public Product(int productId, String productName, int unitPrice, String description, Brand brand, Category category,
-			Date lastUpdate, int sale) {
+			Date lastUpdate, int sale, String imageFeature) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -31,6 +32,17 @@ public class Product {
 		this.category = category;
 		this.lastUpdate = lastUpdate;
 		this.sale = sale;
+		this.featureImage = imageFeature;
+	}
+
+	
+
+	public String getFeatureImage() {
+		return featureImage;
+	}
+
+	public void setFeatureImage(String featureImage) {
+		this.featureImage = featureImage;
 	}
 
 	public List<ProductDetail> getProductDetails() {

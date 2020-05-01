@@ -1,6 +1,5 @@
 package com.fashionmanage.controller.admin;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.fashionmanage.dao.BrandDao;
-import com.fashionmanage.dao.CategoryDao;
 import com.fashionmanage.dao.ProductDao;
 import com.fashionmanage.entity.Brand;
 import com.fashionmanage.entity.Category;
@@ -49,8 +46,7 @@ public class AddProductController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		
+
 		request.getRequestDispatcher("views/admin/products/AddProduct.jsp").forward(request, response);
 
 	}
@@ -61,9 +57,14 @@ public class AddProductController extends HttpServlet {
 	 */
 
 	protected Boolean isNumber(String ob) {
-
-		return ob.matches("^\\d+$");
-
+		if (ob.matches("^\\d+$")) {
+			int a = Integer.parseInt(ob);
+			if (a < 0) {
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -71,6 +72,7 @@ public class AddProductController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 		try (PrintWriter writer = response.getWriter()) {
+
 			String productName = request.getParameter("product-name");
 			String unitPrice = request.getParameter("unit-price");
 			String genders[] = request.getParameterValues("gender");
@@ -84,16 +86,23 @@ public class AddProductController extends HttpServlet {
 			String quantities[] = request.getParameterValues("quantity");
 
 			// validate data
-			if ("".equals(productName) && "".equals(unitPrice)) {
-				request.setAttribute("error", "Vui lòng nhập vào các trường yêu cầu!");
+			if ("".equals(productName) || "".equals(unitPrice)) {
+				writer.println("Vui lòng nhập vào các trường yêu cầu!");
+
 			} else if (!isNumber(unitPrice)) {
-				request.setAttribute("error", "Đơn giá phải là số!");
-			} else if (genders.length < 1) {
-				request.setAttribute("error", "Vui lòng chọn giới tính!");
-			} else if (!isNumber(categoryId) && !isNumber(brandId)) {
-				request.setAttribute("error", "Vui lòng chọn mặt hàng và thương hiệu!");
-			} else if (!"".equals(sale) && !isNumber(sale)) {
-				request.setAttribute("error", "giảm giá phải là số (0-100)!");
+				writer.println("Đơn giá phải là số!");
+
+			} else if (genders == null) {
+				writer.println("Vui lòng chọn giới tính!");
+
+			} else if (!isNumber(categoryId) || !isNumber(brandId)) {
+				writer.println("Vui lòng chọn mặt hàng và thương hiệu!");
+
+			}
+
+			else if (!"".equals(sale) && !isNumber(sale)) {
+				writer.println("giảm giá phải là số (0-100)!");
+
 			} else {
 
 				// upload file
@@ -136,9 +145,8 @@ public class AddProductController extends HttpServlet {
 						}
 					}
 				}
-				System.out.println("so anh : " + imgs.size());
+
 				// add information into database
-				System.out.println("categoryid: " + categoryId);
 				Category category = new Category();
 				category.setCategoryId(Integer.parseInt(categoryId));
 
@@ -151,10 +159,8 @@ public class AddProductController extends HttpServlet {
 				product.setDescription(description);
 				product.setBrand(brand);
 				product.setCategory(category);
-				product.setSale(Integer.parseInt(sale));
+				product.setSale("".equals(sale) ? 0 : Integer.parseInt(sale));
 				product.setImgs(imgs);
-
-				// add product detail with return generate key
 
 				for (int i = 0; i < sizes.length; i++) {
 					if (isNumber(sizes[i]) && !"".equals(colors[i]) && isNumber(quantities[i])) {
@@ -167,16 +173,16 @@ public class AddProductController extends HttpServlet {
 					}
 				}
 
-				int productId = new ProductDao().insert(product);
+				int productId = -1;
+				productId = new ProductDao().insert(product, genders);
 				if (productId == -1) {
-					request.setAttribute("error", "đã xảy ra một vài lỗi không thể thêm vào database!");
 
+					writer.println("Thêm thất bại");
 				} else {
-					request.setAttribute("message", "sản phẩm " + productName +" đã được thêm vào database!");
+					
+					writer.println("Thêm thành công");
 				}
 			}
-			
-			request.getRequestDispatcher("views/admin/products/AddProduct.jsp").forward(request, response);
 
 		}
 

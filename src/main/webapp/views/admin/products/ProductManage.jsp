@@ -37,9 +37,9 @@
 							<div class="col-auto ml-auto text-right mt-n1">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
-										<li class="breadcrumb-item"><a id="open-modal"
-											href="admin-sanpham-add"> <i class="align-middle"
-												data-feather="plus-square"></i>Thêm sản phẩm
+										<li class="breadcrumb-item"><a href="admin-sanpham-add">
+												<i class="align-middle" data-feather="plus-square"></i>Thêm
+												sản phẩm
 										</a></li>
 									</ol>
 								</nav>
@@ -47,7 +47,7 @@
 						</div>
 
 						<!-- the modal box them san pham -->
-						<div id="myModal" class="modal">
+						<%-- <div id="myModal" class="modal">
 							<!-- Modal content -->
 							<div class="modal-content">
 								<div>
@@ -210,9 +210,10 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> --%>
 
 						<!-- /the modal box them san pham -->
+
 						<div class="card">
 							<table class="table table-striped table-hover">
 								<thead>
@@ -228,15 +229,15 @@
 								<tbody>
 									<c:forEach var="p" items="${products }">
 										<tr>
-											<td><img src="img/avatars/avatar-5.jpg" width="48"
-												height="48" class="rounded-circle mr-2" alt="Avatar" />
+											<td><img src="${p.featureImage}" width="48" height="48"
+												class="avatar img-fluid rounded mr-1" alt="ảnh" />
 												${p.productName}</td>
 											<td>${p.unitPrice }</td>
 											<td>${p.description }</td>
 
 											<td class="table-action"><a href="#"><i
-													class="align-middle" data-feather="edit-2"></i></a> <a href="#"><i
-													class="align-middle" data-feather="trash"></i></a></td>
+													class="align-middle" data-feather="edit-2"></i></a> <a href="deleteProduct?id=${p.productId }"><i
+													class="align-middle" data-feather="trash" onclick="return confirm('Bạn thật sự muốn dừng bán sản phẩm ${p.productName}!');" ></i></a></td>
 										</tr>
 									</c:forEach>
 
@@ -253,8 +254,8 @@
 
 	<script src="template/admin/js/vendor.js"></script>
 	<script src="template/admin/js/app.js"></script>
-	<script src="template/admin/js/modal-box.js"></script>
-	<script src="template/admin/js/clone-child.js"></script>
+	<!-- <script src="template/admin/js/modal-box.js"></script>
+	<script src="template/admin/js/clone-child.js"></script> -->
 	<script>
 		$(function() {
 			var ctx = document.getElementById("chartjs-dashboard-line")

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/digital-articles">
+	<Environment name="drivername" value="com.mysql.jdbc.Driver" type="java.lang.String"/>
+    <Environment name="url" value="jdbc:mysql://localhost:3306/digital-news" type="java.lang.String"/>
+    <Environment name="username" value="root" type="java.lang.String" />
+    <Environment name="password" value="Ngothang9x" type="java.lang.String" />
+    <Environment name="productImg" value="template/admin/img/product-img/" type="java.lang.String"/>
+</Context>
